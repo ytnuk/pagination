@@ -1,0 +1,11 @@
+{
+	"name": "ytnuk/pagination",
+	"require": {
+		"ytnuk/application": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"Ytnuk\\": "src/"
+		}
+	}
+}
