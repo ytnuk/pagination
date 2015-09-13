@@ -117,14 +117,12 @@ class Control
 
 	public function getCacheKey() : array
 	{
-		return array_merge(
-			parent::getCacheKey(),
-			[
-				$this->paginator->getBase(),
-				$this->paginator->getPage(),
-				$this->paginator->getItemsPerPage(),
-			]
-		);
+		$key = parent::getCacheKey();
+		$key[] = $this->paginator->getBase();
+		$key[] = $this->paginator->getPage();
+		$key[] = $this->paginator->getItemsPerPage();
+
+		return $key;
 	}
 
 	public function loadState(array $params)
