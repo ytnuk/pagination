@@ -3,7 +3,6 @@ namespace Ytnuk\Pagination;
 
 use ArrayObject;
 use Countable;
-use Iterator;
 use IteratorAggregate;
 use Nette;
 use Traversable;
@@ -11,7 +10,7 @@ use Ytnuk;
 
 class Control
 	extends Ytnuk\Application\Control
-	implements Iterator, Countable
+	implements IteratorAggregate, Countable
 {
 
 	/**
@@ -19,11 +18,6 @@ class Control
 	 * @persistent
 	 */
 	public $page = 1;
-
-	/**
-	 * @var int
-	 */
-	private $iterator;
 
 	/**
 	 * @var Traversable
@@ -47,7 +41,6 @@ class Control
 		$paginator->setItemsPerPage($itemsPerPage);
 		$paginator->setItemCount($this->count());
 		$this->paginator = $paginator;
-		$this->rewind();
 	}
 
 	public function count() : int
@@ -62,38 +55,14 @@ class Control
 				Nette\Application\UI\IRenderable::class,
 				FALSE
 			);
-			if ($parent && $parent instanceof Nette\Application\UI\IRenderable) {
+			if ($parent instanceof Nette\Application\UI\IRenderable) {
 				$parent->redrawControl();
 			}
 		}
 		parent::handleRedirect($fragment);
 	}
 
-	public function next()
-	{
-		$this->iterator++;
-	}
-
-	public function key() : int
-	{
-		return $this->iterator;
-	}
-
-	public function valid() : bool
-	{
-		return $this->iterator <= $this->paginator->getLastPage();
-	}
-
-	public function current() : IteratorAggregate
-	{
-		$this->paginator->setPage($this->iterator);
-		$collection = $this->getCollection();
-		$this->paginator->setPage($this->page);
-
-		return $collection;
-	}
-
-	public function getCollection() : IteratorAggregate
+	public function getIterator() : IteratorAggregate
 	{
 		return new ArrayObject(
 			array_slice(
@@ -108,11 +77,6 @@ class Control
 	public function getPaginator() : Nette\Utils\Paginator
 	{
 		return $this->paginator;
-	}
-
-	public function rewind()
-	{
-		$this->iterator = $this->paginator->getBase();
 	}
 
 	public function getCacheKey() : array
