@@ -13,6 +13,8 @@ class Control
 	implements IteratorAggregate, Countable
 {
 
+	const NAME = 'pagination';
+
 	/**
 	 * @var int
 	 * @persistent
@@ -48,18 +50,21 @@ class Control
 		return iterator_count($this->collection);
 	}
 
-	public function handleRedirect(string $fragment = NULL)
-	{
-		if ($this->getPresenter()->isAjax()) {
-			$parent = $this->lookup(
-				Nette\Application\UI\IRenderable::class,
-				FALSE
-			);
-			if ($parent instanceof Nette\Application\UI\IRenderable) {
-				$parent->redrawControl();
-			}
+	public function redrawControl(
+		string $snippet = NULL,
+		bool $redraw = TRUE
+	) {
+		parent::redrawControl(
+			$snippet,
+			$redraw
+		);
+		$parent = $this->lookup(
+			Nette\Application\UI\IRenderable::class,
+			FALSE
+		);
+		if ($parent instanceof Nette\Application\UI\IRenderable) {
+			$parent->redrawControl();
 		}
-		parent::handleRedirect($fragment);
 	}
 
 	public function getIterator() : IteratorAggregate
