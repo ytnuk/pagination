@@ -50,23 +50,6 @@ class Control
 		return iterator_count($this->collection);
 	}
 
-	public function redrawControl(
-		string $snippet = NULL,
-		bool $redraw = TRUE
-	) {
-		parent::redrawControl(
-			$snippet,
-			$redraw
-		);
-		$parent = $this->lookup(
-			Nette\Application\UI\IRenderable::class,
-			FALSE
-		);
-		if ($parent instanceof Nette\Application\UI\IRenderable) {
-			$parent->redrawControl();
-		}
-	}
-
 	public function getIterator() : IteratorAggregate
 	{
 		return new ArrayObject(
@@ -94,10 +77,38 @@ class Control
 		return $key;
 	}
 
+	protected function getViews() : array
+	{
+		return [
+			'view' => function () {
+				return [
+					$this,
+				];
+			},
+		] + parent::getViews();
+	}
+
 	public function loadState(array $params)
 	{
 		parent::loadState($params);
 		$this->paginator->setPage($this->page);
+	}
+
+	public function redrawControl(
+		string $snippet = NULL,
+		bool $redraw = TRUE
+	) {
+		parent::redrawControl(
+			$snippet,
+			$redraw
+		);
+		$parent = $this->lookup(
+			Nette\Application\UI\IRenderable::class,
+			FALSE
+		);
+		if ($parent instanceof Nette\Application\UI\IRenderable) {
+			$parent->redrawControl();
+		}
 	}
 
 	public function saveState(
@@ -116,16 +127,5 @@ class Control
 		return [
 			'paginator' => $this->paginator,
 		];
-	}
-
-	protected function getViews() : array
-	{
-		return [
-			'view' => function () {
-				return [
-					$this,
-				];
-			},
-		] + parent::getViews();
 	}
 }
