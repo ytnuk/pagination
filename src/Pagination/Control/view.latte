@@ -2,7 +2,7 @@
 	<ul class="pagination">
 		<li n:class="$disabled = $paginator->getPage() <= $paginator->getFirstPage() ? disabled">
 			<a n:href="redirect! page => $paginator->getPage() - 1" n:tag-if="!$disabled">
-				<span aria-hidden="true">&laquo;</span>
+				<span>&laquo;</span>
 			</a>
 		</li>
 		<li n:foreach="range($paginator->getFirstPage(), $paginator->getLastPage()) as $page" n:class="$page === $paginator->getPage() ? active">
@@ -10,7 +10,7 @@
 		</li>
 		<li n:class="$disabled = $paginator->getPage() >= $paginator->getLastPage() ? disabled">
 			<a n:href="redirect! page => $paginator->getPage() + 1" n:tag-if="!$disabled">
-				<span aria-hidden="true">&raquo;</span>
+				<span>&raquo;</span>
 			</a>
 		</li>
 	</ul>
