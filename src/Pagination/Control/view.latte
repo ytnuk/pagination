@@ -5,8 +5,10 @@
 				<span>&laquo;</span>
 			</a>
 		</li>
-		<li n:foreach="range($paginator->getFirstPage(), $paginator->getLastPage()) as $page" n:class="$page === $paginator->getPage() ? active">
-			<a n:href="redirect! page => $page">{$page}</a>
+		<li n:foreach="range($paginator->getFirstPage(), $paginator->getLastPage()) as $page" n:class="$active = $page === $paginator->getPage() ? active">
+			<a n:href="redirect! page => $page" n:tag-if="!$active">
+				<span>{$page}</span>
+			</a>
 		</li>
 		<li n:class="$disabled = $paginator->getPage() >= $paginator->getLastPage() ? disabled">
 			<a n:href="redirect! page => $paginator->getPage() + 1" n:tag-if="!$disabled">
