@@ -97,6 +97,9 @@ class Control
 		if ($parent instanceof Nette\Application\UI\IRenderable) {
 			$parent->redrawControl();
 		}
+		if ( ! $fragment && $parent instanceof Nette\Application\UI\Control) {
+			$fragment = $parent->getSnippetId();
+		}
 		parent::handleRedirect($fragment);
 	}
 
