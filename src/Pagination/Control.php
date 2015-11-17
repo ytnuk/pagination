@@ -88,20 +88,8 @@ class Control
 		] + parent::getViews();
 	}
 
-	public function loadState(array $params)
+	public function handleRedirect(string $fragment = NULL)
 	{
-		parent::loadState($params);
-		$this->paginator->setPage($this->page);
-	}
-
-	public function redrawControl(
-		string $snippet = NULL,
-		bool $redraw = TRUE
-	) {
-		parent::redrawControl(
-			$snippet,
-			$redraw
-		);
 		$parent = $this->lookup(
 			Nette\Application\UI\IRenderable::class,
 			FALSE
@@ -109,6 +97,13 @@ class Control
 		if ($parent instanceof Nette\Application\UI\IRenderable) {
 			$parent->redrawControl();
 		}
+		parent::handleRedirect($fragment);
+	}
+
+	public function loadState(array $params)
+	{
+		parent::loadState($params);
+		$this->paginator->setPage($this->page);
 	}
 
 	public function saveState(
