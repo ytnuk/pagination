@@ -1,8 +1,6 @@
 {
 	"name": "ytnuk/pagination",
-	"type": "ytnuk-module",
 	"require": {
-		"ytnuk/module": "dev-master",
 		"ytnuk/application": "dev-master"
 	},
 	"autoload": {
