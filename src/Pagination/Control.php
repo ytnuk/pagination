@@ -13,8 +13,6 @@ class Control
 	implements IteratorAggregate, Countable
 {
 
-	const NAME = 'pagination';
-
 	/**
 	 * @var int
 	 * @persistent
