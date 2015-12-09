@@ -1,18 +1,18 @@
 <nav n:if="$paginator->getPageCount()">
 	<ul class="pagination">
-		<li n:class="$disabled = $paginator->getPage() <= $paginator->getFirstPage() ? disabled">
-			<a n:href="redirect! page => $paginator->getPage() - 1" n:tag-if="!$disabled">
-				<span>&laquo;</span>
+		<li n:class="page-item, $disabled = $paginator->getPage() <= $paginator->getFirstPage() ? disabled">
+			<a class="page-link" n:href="redirect! page => $paginator->getPage() - 1" n:tag-if="!$disabled">
+				<span class="page-link" n:tag-if="$disabled">&laquo;</span>
 			</a>
 		</li>
-		<li n:foreach="range($paginator->getFirstPage(), $paginator->getLastPage()) as $page" n:class="$active = $page === $paginator->getPage() ? active">
-			<a n:href="redirect! page => $page" n:tag-if="!$active">
-				<span>{$page}</span>
+		<li n:foreach="range($paginator->getFirstPage(), $paginator->getLastPage()) as $page" n:class="page-item, $active = $page === $paginator->getPage() ? active">
+			<a class="page-link" n:href="redirect! page => $page" n:tag-if="!$active">
+				<span class="page-link" n:tag-if="$active">{$page}</span>
 			</a>
 		</li>
-		<li n:class="$disabled = $paginator->getPage() >= $paginator->getLastPage() ? disabled">
-			<a n:href="redirect! page => $paginator->getPage() + 1" n:tag-if="!$disabled">
-				<span>&raquo;</span>
+		<li n:class="page-item, $disabled = $paginator->getPage() >= $paginator->getLastPage() ? disabled">
+			<a class="page-link" n:href="redirect! page => $paginator->getPage() + 1" n:tag-if="!$disabled">
+				<span class="page-link" n:tag-if="$disabled">&raquo;</span>
 			</a>
 		</li>
 	</ul>
