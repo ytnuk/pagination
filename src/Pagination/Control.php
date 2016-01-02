@@ -50,14 +50,7 @@ class Control
 
 	public function getIterator() : IteratorAggregate
 	{
-		return new ArrayObject(
-			array_slice(
-				iterator_to_array($this->collection),
-				$this->paginator->getOffset(),
-				$this->paginator->getItemsPerPage(),
-				TRUE
-			)
-		);
+		return new ArrayObject(array_slice(iterator_to_array($this->collection), $this->paginator->getOffset(), $this->paginator->getItemsPerPage(), TRUE));
 	}
 
 	public function getPaginator() : Nette\Utils\Paginator
@@ -88,10 +81,7 @@ class Control
 
 	public function handleRedirect(string $fragment = NULL)
 	{
-		$parent = $this->lookup(
-			Nette\Application\UI\IRenderable::class,
-			FALSE
-		);
+		$parent = $this->lookup(Nette\Application\UI\IRenderable::class, FALSE);
 		if ($parent instanceof Nette\Application\UI\IRenderable) {
 			$parent->redrawControl();
 		}
@@ -112,10 +102,7 @@ class Control
 		$reflection = NULL
 	) {
 		$this->page = $this->paginator->getPage();
-		parent::saveState(
-			$params,
-			$reflection
-		);
+		parent::saveState($params, $reflection);
 	}
 
 	protected function startup() : array
